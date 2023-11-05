@@ -1,0 +1,75 @@
+{
+  "name": "capassignment",
+  "version": "1.0.0",
+  "description": "A simple CAP project.",
+  "repository": "<Add your repository here>",
+  "license": "UNLICENSED",
+  "private": true,
+  "dependencies": {
+    "@sap/cds": "^7",
+    "express": "^4",
+    "@sap/cds-hana": "^2"
+  },
+  "devDependencies": {
+    "@cap-js/sqlite": "^1",
+    "@sap/cds-dk": "^7"
+  },
+  "scripts": {
+    "start": "cds-serve"
+  },
+  "cds": {
+    "requires": {
+      "db": "sql"
+    },
+    "ECEmploymentInformation": {
+      "kind": "odata-v2",
+      "impl": "srv/external/ECEmploymentInformation"
+  },
+    "credentials": {
+      "[production]": {
+        "destination": "extensionappllication-sf-api",
+       
+        "path": "/odata/v2",
+        "username": "",
+        "password": ""
+      },
+      "[development]": {
+        "url": "",
+        ""authentication":"Basic Authentication",
+        "username": "",
+        "password": ""
+      }
+    }
+  },
+  "[production]": {
+    "uaa": {
+      "kind": "xsuaa",
+      "credentials": {}
+    }
+  },
+  "auth": {
+    "[development]": {
+      "strategy": "mock"
+    },
+    "[production]": {
+      "strategy": "xsuaa-auth"
+    }
+  },
+  "query": {
+    "limit": {
+      "default": 20,
+      "max": 100
+    }
+  },
+  "i18n": {
+    "folders": [
+      "_i18n",
+      "i18n",
+      " assets/i18n"
+    ]
+  },
+"sapux": [
+  "app/accounts_details",
+  "app/cap_fe"
+]
+}

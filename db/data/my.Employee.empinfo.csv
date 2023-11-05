@@ -1,0 +1,5 @@
+EmployeeID;firstname;lastname;age;dateOfBirth;userID;address;dept
+201;"Somasree";"Majumder";25;1996-05-02;101;"W3,Red Street, markaiyankottai";EC
+202;"Rima";"Halder";10;2006-03-24;102;"Blue Street";Payroll
+203;"Moumita";"Halder";10;2006-03-24;103;"Green Street";CPI
+204;"Poula";"Nasipuri";10;2006-03-24;104;"Orange Street";RCM

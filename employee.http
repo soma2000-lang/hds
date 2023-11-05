@@ -1,0 +1,11 @@
+
+POST http://localhost:4004 HTTP/1.1
+
+Authorization: Manager:
+Content-Type: application/json
+
+{ 
+    "Id" : "102"
+    "description": "name change"
+}
+

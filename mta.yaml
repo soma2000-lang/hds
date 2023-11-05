@@ -1,0 +1,90 @@
+_schema-version: "3.1"
+ID: capassignment
+description: A simple CAP project.
+version: 1.0.0
+modules:
+- name: capassignment-srv
+  type: nodejs
+  path: gen/srv
+  requires:
+  - name: capassignment-db
+  provides:
+  - name: srv-api
+    properties:
+      srv-url: ${default-url}
+  parameters:
+    buildpack: nodejs_buildpack
+  build-parameters:
+    builder: npm
+- name: capassignment-db-deployer
+  type: hdb
+  path: gen/db
+  requires:
+  - name: capassignment-db
+  parameters:
+    buildpack: nodejs_buildpack
+- name: capassignment-destination-content
+  type: com.sap.application.content
+  requires:
+  - name: capassignment-destination-service
+    parameters:
+      content-target: true
+  - name: capassignment_html_repo_host
+    parameters:
+      service-key:
+        name: capassignment_html_repo_host-key
+  - name: uaa_capassignment
+    parameters:
+      service-key:
+        name: uaa_capassignment-key
+  parameters:
+    content:
+      instance:
+        destinations:
+        - Name: capass_capassignment_html_repo_host
+          ServiceInstanceName: capassignment-html5-app-host-service
+          ServiceKeyName: capassignment_html_repo_host-key
+          sap.cloud.service: capass
+        - Authentication: OAuth2UserTokenExchange
+          Name: capass_uaa_capassignment
+          ServiceInstanceName: capassignment-xsuaa-service
+          ServiceKeyName: uaa_capassignment-key
+          sap.cloud.service: capass
+        existing_destinations_policy: ignore
+  build-parameters:
+    no-source: true
+resources:
+- name: capassignment-db
+  type: com.sap.xs.hdi-container
+  parameters:
+    service: hana
+    service-plan: hdi-shared
+- name: capassignment-destination-service
+  type: org.cloudfoundry.managed-service
+  parameters:
+    config:
+      HTML5Runtime_enabled: true
+      version: 1.0.0
+    service: destination
+    service-name: capassignment-destination-service
+    service-plan: lite
+- name: capassignment_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-name: capassignment-html5-app-host-service
+    service-plan: app-host
+- name: uaa_capassignment
+  type: org.cloudfoundry.managed-service
+  parameters:
+    path: ./xs-security.json
+    service: xsuaa
+    service-name: capassignment-xsuaa-service
+    service-plan: application
+parameters:
+  enable-parallel-deployments: true
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npx cds build --production
