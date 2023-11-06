@@ -14,6 +14,9 @@ service Employee {
         dept,
         address,
     }
+    entity EmpJob as projection on ECEmploymentInformation.EmpJob{*};
+    
+
        
     } ;
     
