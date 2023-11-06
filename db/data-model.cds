@@ -1,6 +1,6 @@
 //namespace my.bookshop;
 
-//entity Books {
+//entitny Books {
  // key ID : Integer;
  // title  : String;
  // stock  : Integer;
