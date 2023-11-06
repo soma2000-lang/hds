@@ -53,6 +53,30 @@ modules:
         existing_destinations_policy: ignore
   build-parameters:
     no-source: true
+- name: capassignment-app-content
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: capassignment_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - somaproject1.zip
+      name: somaproject1
+      target-path: resources/
+- name: somaproject1
+  type: html5
+  path: soma_project1
+  build-parameters:
+    build-result: dist
+    builder: custom
+    commands:
+    - npm install
+    - npm run build:cf
+    supported-platforms: []
 resources:
 - name: capassignment-db
   type: com.sap.xs.hdi-container
@@ -64,6 +88,15 @@ resources:
   parameters:
     config:
       HTML5Runtime_enabled: true
+      init_data:
+        instance:
+          destinations:
+          - Authentication: NoAuthentication
+            Name: ui5
+            ProxyType: Internet
+            Type: HTTP
+            URL: https://ui5.sap.com
+          existing_destinations_policy: update
       version: 1.0.0
     service: destination
     service-name: capassignment-destination-service
@@ -82,6 +115,7 @@ resources:
     service-name: capassignment-xsuaa-service
     service-plan: application
 parameters:
+  deploy_mode: html5-repo
   enable-parallel-deployments: true
 build-parameters:
   before-all:
