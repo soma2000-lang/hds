@@ -1,0 +1,1 @@
+sap.ui.define(["sap/ui/core/library","sap/uxap/BlockBase"],function(e,a){"use strict";var l=e.mvc.ViewType;var o=a.extend("employeeprofile.SharedBlocks.goals.GoalsBlock",{metadata:{views:{Collapsed:{viewName:"employeeprofile.SharedBlocks.goals.GoalsBlock",type:l.XML},Expanded:{viewName:"employeeprofile.SharedBlocks.goals.GoalsBlock",type:l.XML}}}});return o});

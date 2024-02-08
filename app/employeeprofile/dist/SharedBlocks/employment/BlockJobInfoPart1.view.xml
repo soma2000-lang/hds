@@ -1,0 +1,22 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m">
+
+	<forms:SimpleForm labelSpanL="4" labelSpanM="4" editable="false"
+					  labelSpanS="4" emptySpanL="0" emptySpanM="0" emptySpanS="0"
+					  maxContainerCols="2" layout="ResponsiveGridLayout" content="{ReportInfoModel>/userjobinfo}" width="100%">
+
+		<Label text="Job classification"/>
+		<Text text="{ReportInfoModel>jobTitle}"/>
+
+		<Text text=" "/>
+
+		<Label text="Pay Grade"/>
+		<Text text="{ReportInfoModel>jobTitle}"/>
+
+		<Text text=" "/>
+
+		<Label text="Job title"/>
+		<Text text="{ReportInfoModel>jobTitle}"/>
+
+	</forms:SimpleForm>
+
+</mvc:View>

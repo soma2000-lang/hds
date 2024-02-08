@@ -1,0 +1,54 @@
+<mvc:View controllerName="employeeprofile.controller.Home"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m">
+    <Page id="page" title="{i18n>title}">
+        <Table
+            id="itemsTable"
+            items="{
+                path: '/User'
+            }"
+        > 
+        <columns>
+                <Column>
+                    <Text text="User ID" />
+                </Column>
+                <Column>
+                    <Text text="FullName" />
+                </Column>
+                <Column>
+                    <Text text="Employee Id" />
+                </Column>
+                <Column>
+                    <Text text="Gender" />
+                </Column>
+                <Column>
+                    <Text text="Job Code" />
+                </Column>
+                <Column>
+                    <Text text="Department" />
+                </Column>
+                <Column>
+                    <Text text="Salary" />
+                </Column>
+                <Column>
+                    <Text text="Email" />
+                </Column>
+            </columns>
+            <items>
+                <ColumnListItem  press="onItemPress"
+                        type="Navigation">
+                    <cells>
+                        <Text text="{userId}"/>
+                        <Text text="{defaultFullName}"/>
+                        <Text text="{empId}" />
+                        <Text text="{gender}" />
+                        <Text text="{jobCode}" />
+                        <Text text="{department}" />
+                        <Text text="{salary}" />
+                        <Text text="{email}" />
+                    </cells>
+                </ColumnListItem>
+            </items>
+        </Table>
+    </Page>
+</mvc:View>

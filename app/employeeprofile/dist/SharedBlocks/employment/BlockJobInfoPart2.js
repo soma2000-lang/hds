@@ -1,0 +1,1 @@
+sap.ui.define(["sap/uxap/BlockBase"],function(e){"use strict";var o=e.extend("employeeprofile.SharedBlocks.employment.BlockJobInfoPart2",{metadata:{views:{Collapsed:{viewName:"employeeprofile.SharedBlocks.employment.BlockJobInfoPart2",type:"XML"},Expanded:{viewName:"employeeprofile.SharedBlocks.employment.BlockJobInfoPart2",type:"XML"}}}});return o});

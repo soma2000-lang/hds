@@ -1,0 +1,24 @@
+<mvc:View
+		xmlns:mvc="sap.ui.core.mvc"
+		xmlns:layout="sap.ui.layout"
+		xmlns="sap.m">
+
+
+	<layout:HorizontalLayout class="sapUiSmallMarginTop" content="{ReportInfoModel>/userpersonalinfo}">
+		<layout:VerticalLayout>
+			<Label text="Manager"/>
+			<layout:HorizontalLayout>
+					<layout:content>
+						<layout:VerticalLayout>
+							<Text text="{ReportInfoModel>defaultFullName}"/>
+							<Text text="{ReportInfoModel>department}"/>
+
+						</layout:VerticalLayout>
+					</layout:content>
+			</layout:HorizontalLayout>
+
+		</layout:VerticalLayout>
+	</layout:HorizontalLayout>
+
+
+</mvc:View>

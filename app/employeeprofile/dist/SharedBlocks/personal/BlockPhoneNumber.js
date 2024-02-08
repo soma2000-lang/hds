@@ -1,0 +1,1 @@
+sap.ui.define(["sap/uxap/BlockBase"],function(e){"use strict";var a=e.extend("employeeprofile.SharedBlocks.personal.BlockPhoneNumber",{metadata:{}});return a});

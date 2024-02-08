@@ -1,0 +1,15 @@
+<mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form"
+		  xmlns:core="sap.ui.core" xmlns="sap.m">
+
+	<forms:SimpleForm layout="ColumnLayout" editable="false" content="{ReportInfoModel>/userpersonalinfo}" width="100%">
+
+		<core:Title text="Addresses"/>
+
+		<Label text="Home Address"/>
+		<Text text="{ReportInfoModel>addressLine1}"/>
+
+		<Label text="Mailing Address"/>
+		<Text text="{ReportInfoModel>addressLine1}"/>
+
+	</forms:SimpleForm>
+</mvc:View>
