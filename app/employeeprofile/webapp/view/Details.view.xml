@@ -8,12 +8,19 @@
 	controllerName="employeeprofile.controller.Details"
 	height="100%">
 	<ObjectPageLayout id="ObjectPageLayout"
+		busy="{ReportInfoModel>/busy}"
+		busyIndicatorDelay="0"
 		subSectionLayout="TitleOnLeft"
 		showTitleInHeaderContent="true"
         sections="{ReportInfoModel>/Users}"
+
 		upperCaseAnchorBar="false">
 		<headerTitle>
 			<ObjectPageDynamicHeaderTitle>
+			 <breadcrumbs>
+                    <m:Breadcrumbs id="breadcrumbsId" currentLocationText="Employee Information" >
+                    </m:Breadcrumbs>
+            </breadcrumbs>
 				<expandedHeading>
 					<m:Title text="{ReportInfoModel>jobTitle}" wrapping="true" />
 				</expandedHeading>
