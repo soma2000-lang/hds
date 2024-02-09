@@ -1,5 +1,6 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller"],
+    "sap/ui/core/mvc/Controller",
+    ],
    
 
     /**
@@ -11,11 +12,21 @@ sap.ui.define([
         return Controller.extend("employeeprofile.controller.Details", {
             
             onInit: function () {
-                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);  
-               this.oModel = this.getOwnerComponent().getModel("ReportInfoModel");
-               oRouter.getRoute("Details");
+                this.oSFModel = this.getOwnerComponent().getModel();
+                this.oModel = this.getOwnerComponent().getModel("ReportInfoModel");
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.getRoute("Details").attachPatternMatched(this._onObjectMatched, this);
             },
     
+            _onObjectMatched: async function (oEvent) {
+                this.fetchusersReport(oEvent).then((oData) => {
+                    this.oModel.setProperty("/busy", false);
+                }).catch((oErr) => {
+                    this.oModel.setProperty("/busy", false);
+                });
+            },
+
+            
 
             
            
@@ -92,7 +103,7 @@ sap.ui.define([
                         
                             }
                         
-                        
+                            console.log("aUsers",aUsers);
                             this.oModel.setProperty("/Users", aUsers);
                             
                                             resolve(true);
