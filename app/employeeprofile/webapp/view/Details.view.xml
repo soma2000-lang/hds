@@ -13,7 +13,6 @@
 		subSectionLayout="TitleOnLeft"
 		showTitleInHeaderContent="true"
         sections="{ReportInfoModel>/Users}"
-
 		upperCaseAnchorBar="false">
 		<headerTitle>
 			<ObjectPageDynamicHeaderTitle>
