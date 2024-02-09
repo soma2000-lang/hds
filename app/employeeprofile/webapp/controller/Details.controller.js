@@ -38,7 +38,7 @@ sap.ui.define([
 
                     this.oSFModel.callFunction("/userjobinfo", {
                         method: "GET",
-                        batchGroupId: "batchuserjobinfo",
+                        batchGroupId: "batchuserpersonalinfo",
                         urlParameters: {
                             userId: userId
                           
@@ -47,7 +47,7 @@ sap.ui.define([
 
                     this.oSFModel.callFunction("/usersPhoto", {
                         method: "GET",
-                        batchGroupId: "batchusersPhoto",
+                        batchGroupId: "batchuserpersonalinfo",
                         urlParameters: {
                             userId: userId,
                            
@@ -55,7 +55,7 @@ sap.ui.define([
                     });
                     this.oSFModel.callFunction("/compensationinfo", {
                         method: "GET",
-                        batchGroupId: "batchcompensationinfo",
+                        batchGroupId: "batchuserpersonalinfo",
                         urlParameters: {
                             userId: userId,
                             
