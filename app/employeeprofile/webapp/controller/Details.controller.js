@@ -32,10 +32,11 @@ sap.ui.define([
            
             fetchusersReport : async function (oEvent) {
                 return new Promise(function (resolve, reject) {
-                    this.oModel.setProperty("/busy", false);
                     var args = oEvent.getParameter("arguments");
                     console.log('arguments',args);
                     var userId=args.userId;
+                    console.log("Please trigger:", userId);
+                    this.oModel.setProperty("/busy", true);
                     this.oSFModel.setDeferredGroups(["batchuserpersonalinfo"]);
                     this.oSFModel.callFunction("/userpersonalinfo", {
                         method: "GET",
@@ -86,7 +87,7 @@ sap.ui.define([
                            
                     
                             if (oData.__batchResponses[1].statusCode == '200') {
-                                aUsers = oData.__batchResponses[0].data.results;
+                                aUsers = oData.__batchResponses[1].data.results;
                             
                                 }
                             

@@ -11,10 +11,10 @@
                       content="{ReportInfoModel>/userjobinfo}"
 					  width="100%">
 		<Label text="Start Date"/>
-		<Text text="{ReportInfoModel>startDate}"/>
+		<Text text="{personalInfoModel>/Users/startDate}"/>
 
 		<Label text="End Date"/>
-		<Text text="{ReportInfoModel>endDate}"/>
+		<Text text="{personalInfoModel>/Users/endDate}"/>
 
 		
 	</forms:SimpleForm>

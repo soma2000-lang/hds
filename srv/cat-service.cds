@@ -14,10 +14,10 @@ service EmployeeService  {
         userId : String;
         photo : String;
     };
-    entity EmpJob            as
-    projection on ECEmploymentInformation.EmpJob {
-      *
-    };
+    // entity EmpJob            as
+    // projection on ECEmploymentInformation.EmpJob {
+    //   *
+    // };
     function userjobinfo(selectedMode : String) returns{
     
         userId : String;
@@ -39,7 +39,7 @@ service EmployeeService  {
     //   division,
     //   email,empId,gender,jobCode,salary,userId,manager
     };
-    function userpersonalinfo(selectedMode : String) returns array of {
+    function userpersonalinfo(userId : String) returns array of {
     
         defaultFullName: String;
         department: String;

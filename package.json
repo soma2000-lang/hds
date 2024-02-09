@@ -49,14 +49,14 @@
                 "credentials": {
                     "[production]": {
                         "destination": "extensionapplication-sf-api",
-                        "path": "odata/v2"
+                        "path": "/odata/v2"
                     },
                     "[development]": {
                         "url": "",
                         "authentication": "BasicAuthentication",
                         "username": "",
                         "password": "",
-                        "path": "odata/v2"
+                        "path": "/odata/v2"
                     }
                 }
             },
@@ -66,14 +66,14 @@
                 "credentials": {
                     "[production]": {
                         "destination": "extensionapplication-sf-api",
-                        "path": "odata/v2"
+                        "path": "/odata/v2"
                     },
                     "[development]": {
                         "url": "",
                         "authentication": "BasicAuthentication",
                         "username": "",
                         "password": "",
-                        "path": "odata/v2"
+                        "path": "/odata/v2"
                     }
                 }
             },
@@ -83,14 +83,14 @@
                 "credentials": {
                     "[production]": {
                         "destination": "extensionapplication-sf-api",
-                        "path": "odata/v2"
+                        "path": "/odata/v2"
                     },
                     "[development]": {
                         "url": "",
                         "authentication": "BasicAuthentication",
                         "username": "",
                         "password": "",
-                        "path": "odata/v2"
+                        "path": "/odata/v2"
                     }
                 }
             },
@@ -100,14 +100,14 @@
                 "credentials": {
                     "[production]": {
                         "destination": "extensionapplication-sf-api",
-                        "path": "odata/v2"
+                        "path": "/odata/v2"
                     },
                     "[development]": {
                         "url": "",
                         "authentication": "BasicAuthentication",
                         "username": "",
                         "password": "",
-                        "path": "odata/v2"
+                        "path": "/odata/v2"
                     }
                 }
             }

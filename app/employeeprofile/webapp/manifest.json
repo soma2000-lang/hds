@@ -23,6 +23,15 @@
           "annotations": [],
           "odataVersion": "4.0"
         }
+      },
+      "mainServiceV2" : {
+        "uri": "/v2/odata/v4/employee/",
+        "type": "OData",
+        "settings": {
+          "annotations": [],
+          "localUri": "localService/metadata.xml",
+          "odataVersion":"2.0"
+        }
       }
     },
     "crossNavigation": {
@@ -75,6 +84,8 @@
       "stretch": true,
       "files": [
         "view/Details.view.xml",
+        "view/Home.view.xml",
+        "controller/Details.controller.js",
         "./SharedBlocks/employment/BlockEmpP.js",
         "./SharedBlocks/employment/BlockEmpP.view.xml",
         "manifest.json",
@@ -109,13 +120,15 @@
         }
       },
       "": {
-        "dataSource": "mainService",
+        "dataSource": "mainServiceV2",
         "preload": true,
         "settings": {
           "synchronizationMode": "None",
           "operationMode": "Server",
           "autoExpandSelect": true,
-          "earlyRequests": true
+          "earlyRequests": true,
+          "useBatch":true
+          
         }
       }
     },

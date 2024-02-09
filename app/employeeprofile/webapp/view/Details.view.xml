@@ -12,8 +12,7 @@
 		busyIndicatorDelay="0"
 		subSectionLayout="TitleOnLeft"
 		showTitleInHeaderContent="true"
-        sections="{ReportInfoModel>/Users}"
-		upperCaseAnchorBar="false">
+       	upperCaseAnchorBar="false">
 		<headerTitle>
 			<ObjectPageDynamicHeaderTitle>
 			 <breadcrumbs>
@@ -54,7 +53,7 @@
 
 		<headerContent>
 			<m:FlexBox wrap="Wrap" fitContainer="true">
-				<m:Avatar class="sapUiSmallMarginEnd" src="sap-icon://picture" displaySize="L"/>
+				<m:Avatar class="sapUiSmallMarginEnd" src="{ReportInfoModel>/Users/photo}" displaySize="L"/>
 
 				<layout:VerticalLayout>
 					<m:Link text="{ReportInfoModel>homePhone}"/>
