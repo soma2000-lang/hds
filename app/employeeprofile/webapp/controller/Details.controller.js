@@ -1,5 +1,6 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
+
     ],
    
 
@@ -14,6 +15,7 @@ sap.ui.define([
             onInit: function () {
                 this.oSFModel = this.getOwnerComponent().getModel();
                 this.oModel = this.getOwnerComponent().getModel("ReportInfoModel");
+               // this.initJsonModel();
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.getRoute("Details").attachPatternMatched(this._onObjectMatched, this);
             },
@@ -26,11 +28,15 @@ sap.ui.define([
                 });
             },
 
-            
+            // initJsonModel: function () {
+            //     this.oModel.setData(constants);
+            // },
 
             
            
             fetchusersReport : async function (oEvent) {
+                try {
+
                 return new Promise(function (resolve, reject) {
                     var args = oEvent.getParameter("arguments");
                     console.log('arguments',args);
@@ -48,31 +54,31 @@ sap.ui.define([
                         }
                     });
 
-                    this.oSFModel.callFunction("/userjobinfo", {
-                        method: "GET",
-                        batchGroupId: "batchuserpersonalinfo",
-                        urlParameters: {
-                            userId: userId
+                    // this.oSFModel.callFunction("/userjobinfo", {
+                    //     method: "GET",
+                    //     batchGroupId: "batchuserpersonalinfo",
+                    //     urlParameters: {
+                    //         userId: userId
                           
-                        }
-                    });
+                    //     }
+                    // });
 
-                    this.oSFModel.callFunction("/usersPhoto", {
-                        method: "GET",
-                        batchGroupId: "batchuserpersonalinfo",
-                        urlParameters: {
-                            userId: userId,
+                    // this.oSFModel.callFunction("/usersPhoto", {
+                    //     method: "GET",
+                    //     batchGroupId: "batchuserpersonalinfo",
+                    //     urlParameters: {
+                    //         userId: userId,
                            
-                        }
-                    });
-                    this.oSFModel.callFunction("/compensationinfo", {
-                        method: "GET",
-                        batchGroupId: "batchuserpersonalinfo",
-                        urlParameters: {
-                            userId: userId,
+                    //     }
+                    // });
+                    // this.oSFModel.callFunction("/compensationinfo", {
+                    //     method: "GET",
+                    //     batchGroupId: "batchuserpersonalinfo",
+                    //     urlParameters: {
+                    //         userId: userId,
                             
-                        }
-                    });
+                    //     }
+                    // });
 
                     
 
@@ -86,23 +92,23 @@ sap.ui.define([
 
                            
                     
-                            if (oData.__batchResponses[1].statusCode == '200') {
-                                aUsers = oData.__batchResponses[1].data.results;
+                            // if (oData.__batchResponses[1].statusCode == '200') {
+                            //     aUsers = oData.__batchResponses[1].data.results;
                             
-                                }
+                            //     }
                             
 
-                            if (oData.__batchResponses[2].statusCode == '200') {
+                            // if (oData.__batchResponses[2].statusCode == '200') {
                               
-                                    aUsers = oData.__batchResponses[2].data.results;
-                                }
+                            //         aUsers = oData.__batchResponses[2].data.results;
+                            //     }
                              
 
-                            if (oData.__batchResponses[3].statusCode == '200') {
-                                aUsers = oData.__batchResponses[3].data.results;
+                            // if (oData.__batchResponses[3].statusCode == '200') {
+                            //     aUsers = oData.__batchResponses[3].data.results;
                 
                         
-                            }
+                          //  }
                         
                             console.log("aUsers",aUsers);
                             this.oModel.setProperty("/Users", aUsers);
@@ -114,7 +120,15 @@ sap.ui.define([
                                         }.bind(this)
                                     });
                                 }.bind(this));
-                            },
-                    
-        });
-    });
+            
+                            } catch (oErr) {
+                                reject(oErr);
+                                this.oModel.setProperty("/busy", false);
+                            }
+                        }
+            
+            
+            
+            
+                    });
+                });

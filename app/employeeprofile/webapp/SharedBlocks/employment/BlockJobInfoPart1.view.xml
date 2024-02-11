@@ -2,20 +2,20 @@
 
 	<forms:SimpleForm labelSpanL="4" labelSpanM="4" editable="false"
 					  labelSpanS="4" emptySpanL="0" emptySpanM="0" emptySpanS="0"
-					  maxContainerCols="2" layout="ResponsiveGridLayout" content="{ReportInfoModel>/userjobinfo}" width="100%">
+					  maxContainerCols="2" layout="ResponsiveGridLayout"  width="100%">
 
 		<Label text="Job classification"/>
-		<Text text="{ReportInfoModel>jobTitle}"/>
+		<Text text="{ReportInfoModel>/Users/jobTitle}"/>
 
 		<Text text=" "/>
 
 		<Label text="Pay Grade"/>
-		<Text text="{ReportInfoModel>jobTitle}"/>
+		<Text text="{ReportInfoModel>/Users/jobTitle}"/>
 
 		<Text text=" "/>
 
 		<Label text="Job title"/>
-		<Text text="{ReportInfoModel>jobTitle}"/>
+		<Text text="{ReportInfoModel>/Users/jobTitle}"/>
 
 	</forms:SimpleForm>
 

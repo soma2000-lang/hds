@@ -88,7 +88,6 @@
         "controller/Details.controller.js",
         "./SharedBlocks/employment/BlockEmpP.js",
         "./SharedBlocks/employment/BlockEmpP.view.xml",
-        "manifest.json",
         "./SharedBlocks/employment/BlockJobInfoPart1.js",
         "./SharedBlocks/employment/BlockJobInfoPart1.view.xml",
         "./SharedBlocks/employment/BlockJobInfoPart2.js",
@@ -162,7 +161,7 @@
         },
   
       {
-        "pattern": "User/{userId}",
+        "pattern": "userpersonalinfo/{userId}",
         "name": "Details",
         "target": "Details"
       }

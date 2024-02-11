@@ -8,13 +8,12 @@
 					  labelSpanS="4" emptySpanL="0" emptySpanM="0" emptySpanS="0"
 					  maxContainerCols="2" editable="false"
 					  layout="ResponsiveGridLayout"
-                      content="{ReportInfoModel>/userjobinfo}"
 					  width="100%">
 		<Label text="Start Date"/>
-		<Text text="{personalInfoModel>/Users/startDate}"/>
+		<Text text="{ReportInfoModel>/userjobinfo/startDate}"/>
 
 		<Label text="End Date"/>
-		<Text text="{personalInfoModel>/Users/endDate}"/>
+		<Text text="{ReportInfoModel>/userjobinfo/endDate}"/>
 
 		
 	</forms:SimpleForm>

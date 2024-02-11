@@ -4,14 +4,14 @@
 		xmlns="sap.m">
 
 
-	<layout:HorizontalLayout class="sapUiSmallMarginTop" content="{ReportInfoModel>/userpersonalinfo}">
+	<layout:HorizontalLayout class="sapUiSmallMarginTop">
 		<layout:VerticalLayout>
 			<Label text="Manager"/>
 			<layout:HorizontalLayout>
 					<layout:content>
 						<layout:VerticalLayout>
-							<Text text="{ReportInfoModel>defaultFullName}"/>
-							<Text text="{ReportInfoModel>department}"/>
+							<Text text="{ReportInfoModel>/Users/defaultFullName}"/>
+							<Text text="{ReportInfoModel>/Users/department}"/>
 
 						</layout:VerticalLayout>
 					</layout:content>

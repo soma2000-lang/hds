@@ -1,10 +1,10 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core" xmlns:forms="sap.ui.layout.form" xmlns="sap.m">
 
-	<forms:SimpleForm editable="false"  layout="ColumnLayout" content="{ReportInfoModel>/compensationinfo}">
+	<forms:SimpleForm editable="false"  layout="ColumnLayout" >
 		<core:Title text="Payment Method"/>
 
 		<Label text="Payment Group"/>
-		<Text text="{ReportInfoModel>payGroup}"/>
+		<Text text="{ReportInfoModel>/Users/payGroup}"/>
 
 	</forms:SimpleForm>
 

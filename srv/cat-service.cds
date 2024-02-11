@@ -10,7 +10,7 @@ service EmployeeService  {
        userId,
         photo
     };
-    function usersPhoto(selectedMode : String)   returns array of {                                               
+    function usersPhoto(userId : String)   returns array of {                                               
         userId : String;
         photo : String;
     };
@@ -18,7 +18,7 @@ service EmployeeService  {
     // projection on ECEmploymentInformation.EmpJob {
     //   *
     // };
-    function userjobinfo(selectedMode : String) returns{
+    function userjobinfo(userId : String) returns{
     
         userId : String;
         jobTitle  : String;
@@ -60,7 +60,7 @@ service EmployeeService  {
       *
     };
     
-    function compensationinfo(selectedMode : String) returns array of {
+    function compensationinfo(userId : String) returns array of {
         payGrade: String;
         payGroup: String;
         payrollSystemId: String;

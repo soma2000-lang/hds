@@ -9,10 +9,10 @@
 		<core:Title text="Phone Numbers"/>
 
 		<Label text="Home"/>
-		<Text text="{ReportInfoModel>homePhone}"/>
+		<Text text="{ReportInfoModel>/Users/homePhone}"/>
 
 		<Label text="Office phone"/>
-		<Text text="{ReportInfoModel>businessPhone}"/>
+		<Text text="{ReportInfoModel>/Users/businessPhone}"/>
 
 	</forms:SimpleForm>
 

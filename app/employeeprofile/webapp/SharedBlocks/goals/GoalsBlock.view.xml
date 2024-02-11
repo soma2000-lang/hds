@@ -1,5 +1,5 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:forms="sap.ui.layout.form" xmlns="sap.m">
-	<forms:SimpleForm editable="false" layout="ColumnLayout" content="{ReportInfoModel>/userjobinfo}">
+	<forms:SimpleForm editable="false" layout="ColumnLayout">
 
 			<Label text="Evangelize the UI framework across the company" />
 			<Text text="4 days overdue Cascaded"/>
