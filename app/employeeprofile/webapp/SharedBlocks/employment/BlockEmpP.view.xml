@@ -10,10 +10,10 @@
 					  layout="ResponsiveGridLayout"
 					  width="100%">
 		<Label text="Start Date"/>
-		<Text text="{ReportInfoModel>/userjobinfo/startDate}"/>
+		<Text text="{ReportInfoModel>/Users/userjobinfo/startDate}"/>
 
 		<Label text="End Date"/>
-		<Text text="{ReportInfoModel>/userjobinfo/endDate}"/>
+		<Text text="{ReportInfoModel>/Users/userjobinfo/endDate}"/>
 
 		
 	</forms:SimpleForm>
