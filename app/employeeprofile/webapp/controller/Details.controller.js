@@ -43,10 +43,10 @@ sap.ui.define([
                     var userId=args.userId;
                     console.log("Please trigger:", userId);
                     this.oModel.setProperty("/busy", true);
-                    this.oSFModel.setDeferredGroups(["batchuserpersonalinfo"]);
+                    this.oSFModel.setDeferredGroups(["batchfetchEmpDetails"]);
                     this.oSFModel.callFunction("/userpersonalinfo", {
                         method: "GET",
-                        batchGroupId: "batchuserpersonalinfo",
+                        batchGroupId: "batchfetchEmpDetails",
                         urlParameters: {
             
                             userId: userId
@@ -83,7 +83,7 @@ sap.ui.define([
                     
 
                     this.oSFModel.submitChanges({
-                        batchGroupId: "batchuserpersonalinfo",
+                        batchGroupId: "batchfetchEmpDetails",
                         success: function (oData) {
                             var aUsers = []
                             if (oData.__batchResponses[0].statusCode == '200') {

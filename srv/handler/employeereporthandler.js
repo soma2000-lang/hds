@@ -121,7 +121,7 @@ const fetchPhoto = async (req) => {
         }
       }
 
-      return EmpInfo;
+      return userPhoto;
 
     }
   } catch (oErr) {
@@ -130,6 +130,27 @@ const fetchPhoto = async (req) => {
 }
 
 
+const fetchEmpDetailInfo = async (req) => {
+  try {
+    
+    var [userre, sal, userPhoto,EmpInfo] = await Promise.all([
+      usersReport(req),
+      fetchSalary(req),
+      fetchPhoto(req),
+      getUsers(req)
+    ]);
+    
+    return {
+     "userpersonalinfo":userre, 
+     "compensationinfo":sal,
+     "usersPhoto" :userPhoto,
+     "userjobinfo":EmpInfo
+    }
+  } catch (error) {
+    req.reject(oErr);
+  }
+}
+
 
  
   module.exports = {
@@ -137,7 +158,8 @@ const fetchPhoto = async (req) => {
     getUserid,
     usersReport,
     fetchSalary,
-    fetchPhoto 
+    fetchPhoto ,
+    fetchEmpDetailInfo
   }
 
 
