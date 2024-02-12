@@ -1,13 +1,13 @@
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-
+    "../model/constants"
     ],
    
 
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller) {
+    function (Controller,constants) {
         "use strict";
         
         return Controller.extend("employeeprofile.controller.Details", {
@@ -15,7 +15,7 @@ sap.ui.define([
             onInit: function () {
                 this.oSFModel = this.getOwnerComponent().getModel();
                 this.oModel = this.getOwnerComponent().getModel("ReportInfoModel");
-               // this.initJsonModel();
+              // this.initJsonModel();
                 var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
                 oRouter.getRoute("Details").attachPatternMatched(this._onObjectMatched, this);
             },
@@ -44,7 +44,7 @@ sap.ui.define([
                     console.log("Please trigger:", userId);
                     this.oModel.setProperty("/busy", true);
                     this.oSFModel.setDeferredGroups(["batchfetchEmpDetails"]);
-                    this.oSFModel.callFunction("/userpersonalinfo", {
+                    this.oSFModel.callFunction("/fetchEmpDetails", {
                         method: "GET",
                         batchGroupId: "batchfetchEmpDetails",
                         urlParameters: {
@@ -56,7 +56,7 @@ sap.ui.define([
 
                     // this.oSFModel.callFunction("/userjobinfo", {
                     //     method: "GET",
-                    //     batchGroupId: "batchuserpersonalinfo",
+                    //     batchGroupId: "batchfetchEmpDetails",
                     //     urlParameters: {
                     //         userId: userId
                           
@@ -65,7 +65,7 @@ sap.ui.define([
 
                     // this.oSFModel.callFunction("/usersPhoto", {
                     //     method: "GET",
-                    //     batchGroupId: "batchuserpersonalinfo",
+                    //     batchGroupId: "batchfetchEmpDetails",
                     //     urlParameters: {
                     //         userId: userId,
                            
@@ -73,7 +73,7 @@ sap.ui.define([
                     // });
                     // this.oSFModel.callFunction("/compensationinfo", {
                     //     method: "GET",
-                    //     batchGroupId: "batchuserpersonalinfo",
+                    //     batchGroupId: "batchfetchEmpDetails",
                     //     urlParameters: {
                     //         userId: userId,
                             
@@ -85,7 +85,7 @@ sap.ui.define([
                     this.oSFModel.submitChanges({
                         batchGroupId: "batchfetchEmpDetails",
                         success: function (oData) {
-                            var aUsers = []
+                            var aUsers = [];
                             if (oData.__batchResponses[0].statusCode == '200') {
                                 aUsers = oData.__batchResponses[0].data.results;
                             }
@@ -98,17 +98,17 @@ sap.ui.define([
                             //     }
                             
 
-                            // if (oData.__batchResponses[2].statusCode == '200') {
-                              
-                            //         aUsers = oData.__batchResponses[2].data.results;
-                            //     }
-                             
-
+                            //     if (oData.__batchResponses[2].statusCode == '200') {
+                                                        
+                            //                             aUsers=oData.__batchResponses[2].data.results;
+                            //                             this.oModel.setProperty("/Users", aUsers);
+                                                       
+                            //                         }
                             // if (oData.__batchResponses[3].statusCode == '200') {
                             //     aUsers = oData.__batchResponses[3].data.results;
                 
                         
-                          //  }
+                           //}
                         
                             console.log("aUsers",aUsers);
                             this.oModel.setProperty("/Users", aUsers);

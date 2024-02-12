@@ -10,9 +10,9 @@ class EmployeeService extends cds.ApplicationService {
         this.on('fetchEmpDetails', employeereporthandler.fetchEmpDetailInfo);
         // this.on('usersPhoto', employeereporthandler.fetchPhoto);
         // this.on('userjobinfo', employeereporthandler.getUsers);
-        this.on('userpersonalinfo', employeereporthandler.usersReport);
+        // this.on('userpersonalinfo', employeereporthandler.usersReport);
         // this.on('compensationinfo', employeereporthandler.fetchSalary);
-       
+    
         return super.init();
     }
 }

@@ -69,10 +69,10 @@ service EmployeeService  {
     };
    
         function fetchEmpDetails(userId : String) returns {
-        userre:  userpersonalinfo;
-        sal: compensationinfo;
-        usersPhoto: usersPhoto;
-        EmpInfo : userjobinfo   
+            userre:  userpersonalinfo;
+            sal: compensationinfo;
+            usersPhoto: usersPhoto;
+            EmpInfo : userjobinfo   
     };  
     }
 

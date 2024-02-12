@@ -8,7 +8,7 @@
 	controllerName="employeeprofile.controller.Details"
 	height="100%">
 	<ObjectPageLayout id="ObjectPageLayout"
-		busy="{ReportInfoModel>/Users//busy}"
+		busy="{ReportInfoModel>/busy}"
 		busyIndicatorDelay="0"
 		subSectionLayout="TitleOnLeft"
 		showTitleInHeaderContent="true"
@@ -20,26 +20,26 @@
                     </m:Breadcrumbs>
             </breadcrumbs>
 				<expandedHeading>
-					<m:Title text="{ReportInfoModel>/Users/jobTitle}" wrapping="true" />
+					<m:Title text="{ReportInfoModel>/Users/userjobinfo/jobTitle}" wrapping="true" />
 				</expandedHeading>
 
 				<snappedHeading>
 						<m:FlexBox fitContainer="true" alignItems="Center" >
 							<m:Avatar src="sap-icon://picture" class="sapUiTinyMarginEnd"/>
-							<m:Title text="{ReportInfoModel>/Users/jobTitle}" wrapping="true" />
+							<m:Title text="{ReportInfoModel>/Users/userjobinfo/jobTitle}" wrapping="true" />
 						</m:FlexBox>
 				</snappedHeading>
 
 				<expandedContent>
-					<m:Text text="{ReportInfoModel>/Users/jobTitle}"/>
+					<m:Text text="{ReportInfoModel>/Users/userjobinfo/jobTitle}"/>
 				</expandedContent>
 
 				<snappedContent>
-					<m:Text text="{ReportInfoModel>/Users/jobTitle}"/>
+					<m:Text text="{ReportInfoModel>/Users/userjobinfo/jobTitle}"/>
 				</snappedContent>
 
 				<snappedTitleOnMobile>
-					<m:Title text="{ReportInfoModel>/Users/jobTitle}"/>
+					<m:Title text="{ReportInfoModel>/Users/userjobinfo/jobTitle}"/>
 				</snappedTitleOnMobile>
 
 				<actions>
@@ -53,11 +53,11 @@
 
 		<headerContent>
 			<m:FlexBox wrap="Wrap" fitContainer="true">
-				<m:Avatar class="sapUiSmallMarginEnd" src="{ReportInfoModel>/Users/photo}" displaySize="L"/>
+				<m:Avatar class="sapUiSmallMarginEnd" src="{ReportInfoModel>/Users/usersPhoto/photo}" displaySize="L"/>
 
 				<layout:VerticalLayout>
-					<m:Link text="{ReportInfoModel>/Users/homePhone}"/>
-					<m:Link text="{ReportInfoModel>/Users/email}"/>
+					<m:Link text="{ReportInfoModel>/Users/userpersonalinfo/homePhone}"/>
+					<m:Link text="{ReportInfoModel>/Users/userpersonalinfo/email}"/>
 					<layout:HorizontalLayout>
 						<m:Image src="./test-resources/sap/uxap/images/linkedin.png"/>
 						<m:Image src="./test-resources/sap/uxap/images/Twitter.png" class="sapUiSmallMarginBegin"/>
@@ -73,7 +73,7 @@
 				</layout:VerticalLayout>
 
 				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-					<m:Label text="{ReportInfoModel>/Users/location}"/>
+					<m:Label text="{ReportInfoModel>/Users/userjobinfo/location}"/>
 				</layout:VerticalLayout>
 			</m:FlexBox>
 		</headerContent>

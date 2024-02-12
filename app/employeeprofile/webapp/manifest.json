@@ -129,11 +129,12 @@
           "useBatch":true
           
         }
-      }
+      },
+      "ReportInfoModel" : {
+        "type" : "sap.ui.model.json.JSONModel"
+    }
+    
     },
-    "ReportInfoModel" : {
-      "type" : "sap.ui.model.json.JSONModel"
-  },
     "resources": {
       "css": [
         {
@@ -161,7 +162,7 @@
         },
   
       {
-        "pattern": "userpersonalinfo/{userId}",
+        "pattern": "fetchEmpDetails/{userId}",
         "name": "Details",
         "target": "Details"
       }

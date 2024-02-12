@@ -16,17 +16,17 @@ log.setLoggingLevel("info");
     const txei = sfecei.transaction(req);                   
     const query = SELECT.from("EmpJob", ["userId","jobTitle","employmentNav","workLocation","startDate","standardHours","location","managerId","fte","endDate","division","employeeClass"]).where(`managerId IN`, user)
     EmpInfo = await txei.send({ method: "READ", query });
-    console.log('Employees', EmpInfo);
+   // console.log('Employees', EmpInfo);
     return EmpInfo;
   }
 
-  const getUserid = async (req) => {               
-    const txei = sfecei.transaction(req);
-    const query = SELECT.from("EmpJob", ["userId"]).where(`managerId IN`, user)
-    EmpInfo = await txei.send({ method: "READ", query });
-    console.log(EmpInfo);
-    return EmpInfo;
-  }
+  // const getUserid = async (req) => {               
+  //   const txei = sfecei.transaction(req);
+  //   const query = SELECT.from("EmpJob", ["userId"]).where(`managerId IN`, user)
+  //   EmpInfo = await txei.send({ method: "READ", query });
+  //   console.log(EmpInfo);
+  //   return EmpInfo;
+  // }
 
 
   const usersReport = async (req) => {                                      
@@ -36,10 +36,11 @@ log.setLoggingLevel("info");
     let flattenedData = [];
     if (EmpInfo) {
       const usersArray = EmpInfo.map(obj => obj.userId);                     
-      console.log(usersArray);
+    //  console.log(usersArray);
       const query = SELECT.from("User", ["defaultFullName","department","email","empId","gender","jobCode","salary","userId","manager","homePhone","businessPhone","addressLine1"])
         .where(`userId IN`, usersArray);
         userre = await txecto.send({ method: "READ", query });
+        //console("Userarray",userre);
         if (Array.isArray(userre) && userre.length) {
           userre.forEach((item) => {
               flattenedData.push({
@@ -59,9 +60,9 @@ log.setLoggingLevel("info");
               });
             });
     
-
+             // console.log("flatten",flattenedData);
     
-          return userre;
+         return  flattenedData;
             }
         
       }
@@ -69,16 +70,19 @@ log.setLoggingLevel("info");
 
 
 const fetchSalary = async (req) => {                                      
-  await getUsers(req);                                                          
+  let aUsers=await getUsers(req);   
+  console.log(aUsers);                                               
   const txecti = sfecci.transaction(req);
   let sal=[];
   let Data = [];
-  if (EmpInfo) {
+  if (aUsers.length>0) {
     const usersArray = EmpInfo.map(obj => obj.userId);                     
     console.log(usersArray);
     const query = SELECT.from("EmpCompensation", ["payGrade","payGroup","payrollSystemId",
-    "userId","benefitsRate"]).where(`userId IN`, usersArray);
+    "userId","benefitsRate"]).where(`userId IN`, aUsers);
+    console.log(query);
     sal = await txecti.send({ method: "READ", query });
+    console.log(sal);
     if (Array.isArray(sal) && sal.length) {
       sal.forEach((item) => {
         Data.push({
@@ -94,7 +98,7 @@ const fetchSalary = async (req) => {
 
 
       }
-    return sal;
+   return sal;
   }
 }
 
@@ -106,7 +110,7 @@ const fetchPhoto = async (req) => {
     console.log(EmpInfo);
     if (EmpInfo) {
       const usersArray = EmpInfo.map(obj => obj.userId);
-      console.log(usersArray);
+      //console.log(usersArray);
       let userPhoto = [];
       const query = SELECT.from("Photo", ["photo", "userId"]).where(`userId IN`, usersArray);
       userPhoto = await txei.send({ method: "READ", query });
@@ -132,7 +136,7 @@ const fetchPhoto = async (req) => {
 
 const fetchEmpDetailInfo = async (req) => {
   try {
-    
+    console.log("Please work");
     var [userre, sal, userPhoto,EmpInfo] = await Promise.all([
       usersReport(req),
       fetchSalary(req),
@@ -140,13 +144,14 @@ const fetchEmpDetailInfo = async (req) => {
       getUsers(req)
     ]);
     
+    
     return {
      "userpersonalinfo":userre, 
      "compensationinfo":sal,
      "usersPhoto" :userPhoto,
      "userjobinfo":EmpInfo
     }
-  } catch (error) {
+  } catch (oErr) {
     req.reject(oErr);
   }
 }
@@ -155,7 +160,6 @@ const fetchEmpDetailInfo = async (req) => {
  
   module.exports = {
     getUsers,
-    getUserid,
     usersReport,
     fetchSalary,
     fetchPhoto ,
