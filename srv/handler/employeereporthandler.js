@@ -37,7 +37,7 @@
         const { userId } = req.data;
         console.log(userId);
         const txecfp = sfecei.transaction(req);
-        const query = SELECT.from("EmpJob", (emp) => {
+        const query = [SELECT.from("EmpJob", (emp) => {
           emp.userId,
           emp.jobTitle,
           emp.workLocation,
@@ -50,13 +50,13 @@
           emp.division,
           emp.employeeClass
           
-          }).where({ userId: userId});
+          }).where({ userId: userId})];
     
         const [EmpJob] = await txecfp.send({ method: "GET", query });
-        console.log("emp",EmpJob);
+        //console.log("emp",EmpJob);
         if (Array.isArray(EmpJob) && EmpJob.length) {
-          console.log(EmpJob);
-          return EmpJob;
+          console.log(EmpJob[0]);
+          return EmpJob[0];
         } else {
           log.info(`Cloudn't find any pending records`);
           return {
@@ -116,24 +116,18 @@
     const fetchSalary = async (req) => {
       try {
         const { userId } = req.data;
-        //console.log(userId);
+        console.log(userId);
         const txecti = sfecci.transaction(req);
-        const query = [SELECT.from("EmpCompensation", (person) => {
+        const query = SELECT.from("EmpCompensation", (person) => {
           person.payGrade, person.payGroup, person.payrollSystemId,person.userId,person.benefitsRate
-        }).where({ userId: userId })];
+        }).where({ userId: userId });
          
         //console.log("query",query);
-        const [EmpCompensation]= await txecti.send({ method: "READ", query });
-      //  console.log("EmpCompensation",EmpCompensation);
-        if (Array.isArray(EmpCompensation) && EmpCompensation.length) {
-          //console.log(EmpCompensation);
-          return EmpCompensation;
-        } else {
-          log.info(`Cloudn't find any pending records`);
-          return {
-            "employeecompensation": ""
-          };
-        }
+        const EmpCompensation= await txecti.send({ method: "READ", query });
+        console.log("EmpCompensation",EmpCompensation[0]);
+        return EmpCompensation[0];
+        
+
       }
       catch (oErr) {
         req.reject(oErr);
@@ -150,9 +144,9 @@
         const query = [SELECT.from("Photo", ["photo", "userId"])
             .where({ userId: userId ,photoType:1})];
         const [Photo] = await txecfp.send({ method: "READ", query });
-        //console.log("photo",Photo);
+        console.log("photo",Photo[0]);
         
-        return Photo;
+        return Photo[0];
       } catch (oErr) {
         req.error({
           code: 500,
@@ -167,7 +161,7 @@
     const fetchEmpDetailInfo = async (req) => {
       try {
         console.log('running');
-        var [Photo,EmpJob,EmpCompensation,User] = await Promise.all([fetchPhoto(req),getUsers(req),
+        var [Photo,EmpJob,EmpCompensation,User]= await Promise.all([fetchPhoto(req),getUsers(req),
           fetchSalary(req),
            usersReport(req)]);
           console.log(Photo);
@@ -198,11 +192,11 @@
   
    
     module.exports = {
-     getUsers,
+     //getUsers,
       getemployee,
-       usersReport,
-      fetchSalary,
-       fetchPhoto,
+      //  usersReport,
+      // fetchSalary,
+      //  fetchPhoto,
 
       fetchEmpDetailInfo
     }
@@ -238,7 +232,7 @@
     fetchSalary,
     fetchPhoto ,
     getemployee ,
-    fetchEmpDetailInfo
+   fetchEmpDetailInfo
   }
 
 

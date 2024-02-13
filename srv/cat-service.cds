@@ -67,7 +67,7 @@ service EmployeeService @(requires: ['authenticated-user']) {
         benefitsRate: String;
     };
    
-        function fetchEmpDetails(userId : String) returns array of{
+        function fetchEmpDetails(userId : String) returns array of {
                 User:  userpersonalinfo;
                 EmpCompensation  : compensationinfo;
                 Photo: usersPhoto;

@@ -6,7 +6,7 @@
 		<core:Title text="Payment method for Expenses"/>
 
 		<Label text="Extra Travel Expenses"/>
-		<Text text="{ReportInfoModel>/Users/benefitsRate}"/>
+		<Text text="{ReportInfoModel>/Users/0/EmpCompensation/benefitsRate}"/>
 
 	</forms:SimpleForm>
 

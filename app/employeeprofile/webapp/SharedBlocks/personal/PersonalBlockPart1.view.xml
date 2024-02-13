@@ -5,7 +5,7 @@
 		<core:Title text="Payment Method"/>
 
 		<Label text="Payment Group"/>
-		<Text text="{ReportInfoModel>/Users/payGroup}"/>
+		<Text text="{ReportInfoModel>/Users/0/EmpCompensation/payGroup}"/>
 
 	</forms:SimpleForm>
 
