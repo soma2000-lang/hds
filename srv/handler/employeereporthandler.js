@@ -1,160 +1,234 @@
-const cds = require("@sap/cds");
-const log = require("cf-nodejs-logging-support");
 
-log.setLoggingLevel("info");
-
-
-(async function () {
-    sfecei = await cds.connect.to("ECEmploymentInformation");
-    sfecus = await cds.connect.to("PLTUserManagement");
-    sfecfo = await cds.connect.to("FoundationPlatformPLT");
-    sfecci = await cds.connect.to('ECCompensationInformation');
-  })();
-  const user = ['103092'];
-  let EmpInfo;                                           
-  const getUsers = async (req) => {                       
-    const txei = sfecei.transaction(req);                   
-    const query = SELECT.from("EmpJob", ["userId","jobTitle","employmentNav","workLocation","startDate","standardHours","location","managerId","fte","endDate","division","employeeClass"]).where(`managerId IN`, user)
-    EmpInfo = await txei.send({ method: "READ", query });
-   // console.log('Employees', EmpInfo);
-    return EmpInfo;
-  }
-
-  // const getUserid = async (req) => {               
-  //   const txei = sfecei.transaction(req);
-  //   const query = SELECT.from("EmpJob", ["userId"]).where(`managerId IN`, user)
-  //   EmpInfo = await txei.send({ method: "READ", query });
-  //   console.log(EmpInfo);
-  //   return EmpInfo;
-  // }
-
-
-  const usersReport = async (req) => {                                      
-    await getUsers(req);   
-    let userre=[] ;                                                  
-    const txecto = sfecus.transaction(req);
-    let flattenedData = [];
-    if (EmpInfo) {
-      const usersArray = EmpInfo.map(obj => obj.userId);                     
-    //  console.log(usersArray);
-      const query = SELECT.from("User", ["defaultFullName","department","email","empId","gender","jobCode","salary","userId","manager","homePhone","businessPhone","addressLine1"])
-        .where(`userId IN`, usersArray);
-        userre = await txecto.send({ method: "READ", query });
-        //console("Userarray",userre);
-        if (Array.isArray(userre) && userre.length) {
-          userre.forEach((item) => {
-              flattenedData.push({
-                userId: item.userId,
-                defaultFullName: item.defaultFullName,
-                department:item.department,
-                email:item.email,
-                empId:item.empId,
-                gender:item.gender,
-                jobCode:item.jobCode,
-                salary:item.salary,
-                userId:item.userId,
-                manager:item.manager,
-                homePhone:item.homePhone,
-                businessPhone:item.businessPhone,
-                addressLine1:item.addressLine1
-              });
-            });
     
-             // console.log("flatten",flattenedData);
-    
-         return  flattenedData;
-            }
-        
+  const cds = require("@sap/cds");
+  const log = require("cf-nodejs-logging-support");
+  
+  log.setLoggingLevel("info");
+  
+  
+  (async function () {
+      sfecei = await cds.connect.to("ECEmploymentInformation");
+      sfecus = await cds.connect.to("PLTUserManagement");
+      sfecfo = await cds.connect.to("FoundationPlatformPLT");
+      sfecci = await cds.connect.to('ECCompensationInformation');
+    })();
+
+    const getemployee = async (req) => {
+      try {
+       // console.log("running");
+        const managerId = req.user.id;
+        //console.log(managerId);
+        const txecei =  sfecei.transaction(req);
+        let usersInfo = await txecei.get(
+          `/EmpJob?$format=json&$select=userId,department&$filter=managerId eq '${managerId}'`
+        );
+      //  console.log(usersInfo);
+        return usersInfo;
+      } catch (err) {
+        req.reject(err);
       }
     }
 
-
-const fetchSalary = async (req) => {                                      
-  let aUsers=await getUsers(req);   
-  console.log(aUsers);                                               
-  const txecti = sfecci.transaction(req);
-  let sal=[];
-  let Data = [];
-  if (aUsers.length>0) {
-    const usersArray = EmpInfo.map(obj => obj.userId);                     
-    console.log(usersArray);
-    const query = SELECT.from("EmpCompensation", ["payGrade","payGroup","payrollSystemId",
-    "userId","benefitsRate"]).where(`userId IN`, aUsers);
-    console.log(query);
-    sal = await txecti.send({ method: "READ", query });
-    console.log(sal);
-    if (Array.isArray(sal) && sal.length) {
-      sal.forEach((item) => {
-        Data.push({
-          userId: item.userId,
-          payGrade:item.payGrade,
-          payGroup:item.payGroup,
-          payrollSystemId:item.payrollSystemId,
-          benefitsRate:item.benefitsRate
+ 
+    
+    
+    const getUsers = async (req) => {
+      try {
+        const { userId } = req.data;
+        console.log(userId);
+        const txecfp = sfecei.transaction(req);
+        const query = SELECT.from("EmpJob", (emp) => {
+          emp.userId,
+          emp.jobTitle,
+          emp.workLocation,
+          emp.startDate,
+          emp.standardHours,
+          emp.location,
+          emp.managerId,
+          emp.fte,
+          emp.endDate,
+          emp.division,
+          emp.employeeClass
           
-        });
-      });
-
-
-
-      }
-   return sal;
-  }
-}
-
-const fetchPhoto = async (req) => {
-  try {
-    await getUsers(req);
-
-    const txei = sfecfo.transaction(req);
-    console.log(EmpInfo);
-    if (EmpInfo) {
-      const usersArray = EmpInfo.map(obj => obj.userId);
-      //console.log(usersArray);
-      let userPhoto = [];
-      const query = SELECT.from("Photo", ["photo", "userId"]).where(`userId IN`, usersArray);
-      userPhoto = await txei.send({ method: "READ", query });
-      if (Array.isArray(userPhoto) && userPhoto.length) {
-        for (const user of usersArray) {
-          userPhoto.map((image) => {
-            if (user.userId == image?.userId) {
-              image.photo = image.photo ? ("data:image/jpeg;base64," + image.photo.replaceAll("\r\n", "")) : "";
-              user.photo = image;
-            }
-          })
+          }).where({ userId: userId});
+    
+        const [EmpJob] = await txecfp.send({ method: "GET", query });
+        console.log("emp",EmpJob);
+        if (Array.isArray(EmpJob) && EmpJob.length) {
+          console.log(EmpJob);
+          return EmpJob;
+        } else {
+          log.info(`Cloudn't find any pending records`);
+          return {
+            "jobTitle": ""
+          };
         }
       }
+      catch (oErr) {
+        req.reject(oErr);
+      }
+    };
+    
 
-      return userPhoto;
-
-    }
-  } catch (oErr) {
-    req.reject(oErr);
-  }
-}
-
-
-const fetchEmpDetailInfo = async (req) => {
-  try {
-    console.log("Please work");
-    var [userre, sal, userPhoto,EmpInfo] = await Promise.all([
-      usersReport(req),
-      fetchSalary(req),
-      fetchPhoto(req),
-      getUsers(req)
-    ]);
+    
+    const usersReport = async (req) => {
+      try {
+        const { userId } = req.data;
+        //console.log(userId);
+        const txecei = sfecus.transaction(req);
+        const query = [SELECT.from("User", (person) => {
+          person.defaultFullName,
+          person.department,
+          person.email,
+          person.empId,
+          person.gender,
+          person.jobCode,
+          person.salary,
+          person.userId,
+          person.manager,
+          person.homePhone,
+          person.businessPhone,
+          person.addressLine1
+          
+        }).where({ userId: userId })];
+        const [User] = await txecei.send({ method: "GET", query });
+        //console.log("user",User);
+        if (Array.isArray(User) && User.length) {
+          //console.log(User);
+          return User[0];
+        } else {
+          log.info(`Cloudn't find any pending records`);
+          return {
+            "Name": "",
+          };
+        }
+      }
+      catch (oErr) {
+        req.reject(oErr);
+      }
+    };
     
     
-    return {
-     "userpersonalinfo":userre, 
-     "compensationinfo":sal,
-     "usersPhoto" :userPhoto,
-     "userjobinfo":EmpInfo
+    
+    
+   
+    
+    const fetchSalary = async (req) => {
+      try {
+        const { userId } = req.data;
+        //console.log(userId);
+        const txecti = sfecci.transaction(req);
+        const query = [SELECT.from("EmpCompensation", (person) => {
+          person.payGrade, person.payGroup, person.payrollSystemId,person.userId,person.benefitsRate
+        }).where({ userId: userId })];
+         
+        //console.log("query",query);
+        const [EmpCompensation]= await txecti.send({ method: "READ", query });
+      //  console.log("EmpCompensation",EmpCompensation);
+        if (Array.isArray(EmpCompensation) && EmpCompensation.length) {
+          //console.log(EmpCompensation);
+          return EmpCompensation;
+        } else {
+          log.info(`Cloudn't find any pending records`);
+          return {
+            "employeecompensation": ""
+          };
+        }
+      }
+      catch (oErr) {
+        req.reject(oErr);
+      }
+    };
+    
+  
+    
+    const fetchPhoto = async (req) => {
+      try {
+       // console.log("running");
+        const { userId } = req.data;
+        const txecfp = sfecfo.transaction(req);
+        const query = [SELECT.from("Photo", ["photo", "userId"])
+            .where({ userId: userId ,photoType:1})];
+        const [Photo] = await txecfp.send({ method: "READ", query });
+        //console.log("photo",Photo);
+        
+        return Photo;
+      } catch (oErr) {
+        req.error({
+          code: 500,
+          message: oErr,
+          target: oErr,
+          status: 500,
+        });
+      }
+    };
+
+    
+    const fetchEmpDetailInfo = async (req) => {
+      try {
+        console.log('running');
+        var [Photo,EmpJob,EmpCompensation,User] = await Promise.all([fetchPhoto(req),getUsers(req),
+          fetchSalary(req),
+           usersReport(req)]);
+          console.log(Photo);
+          console.log(EmpJob);
+          console.log(EmpCompensation);
+          console.log(User);
+          if (Array.isArray(EmpJob) && EmpJob.length) {
+            for(const user of EmpJob){
+              Photo.map((image) => {
+                if(user.userId==image?.userId){
+                  user.photo = image.photo ? ("data:image/jpeg;base64," + image.photo.replaceAll("\r\n", "")) : "";
+                  user.photo=image.photo;
+                }
+                })
+              }
+      }
+        
+        return {
+          "User": User,   
+          "EmpCompensation": EmpCompensation,
+          "Photo":Photo ,
+          "EmpJob" : EmpJob
+        }
+      } catch (oErr) {
+        req.reject(oErr);
+      }
+    };
+  
+   
+    module.exports = {
+     getUsers,
+      getemployee,
+       usersReport,
+      fetchSalary,
+       fetchPhoto,
+
+      fetchEmpDetailInfo
     }
-  } catch (oErr) {
-    req.reject(oErr);
-  }
-}
+  
+  
+  
+  
+
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
+    
 
 
  
@@ -163,6 +237,7 @@ const fetchEmpDetailInfo = async (req) => {
     usersReport,
     fetchSalary,
     fetchPhoto ,
+    getemployee ,
     fetchEmpDetailInfo
   }
 

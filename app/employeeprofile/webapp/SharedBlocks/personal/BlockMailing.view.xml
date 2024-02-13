@@ -4,12 +4,13 @@
 		xmlns:core="sap.ui.core"
 		xmlns="sap.m">
 
-	<forms:SimpleForm layout="ColumnLayout" width="100%">
+	<forms:SimpleForm layout="ColumnLayout" busy="{ReportInfoModel>/busy}"
+		busyIndicatorDelay="0" width="100%">
 
 		<core:Title text="Mailing Address"/>
 
 		<Label text="Work"/>
-		<Text text="{ReportInfoModel>/Users/email}"/>
+		<Text text="{ReportInfoModel>/Users/0/User/email}"/>
 
 	</forms:SimpleForm>
 </mvc:View>

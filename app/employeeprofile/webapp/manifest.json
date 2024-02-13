@@ -162,7 +162,7 @@
         },
   
       {
-        "pattern": "fetchEmpDetails/{userId}",
+        "pattern": "Users/{userId}",
         "name": "Details",
         "target": "Details"
       }

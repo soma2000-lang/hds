@@ -3,7 +3,7 @@ using {FoundationPlatformPLT} from './external/FoundationPlatformPLT.csn';
 using {PLTUserManagement} from './external/PLTUserManagement.csn';
 using {ECCompensationInformation} from './external/ECCompensationInformation.csn';
 
-service EmployeeService  {
+service EmployeeService @(requires: ['authenticated-user']) {
   
     entity Photo          as
     projection on FoundationPlatformPLT.Photo {
@@ -14,10 +14,11 @@ service EmployeeService  {
         userId : String;
         photo : String;
     };
-    // entity EmpJob            as
-    // projection on ECEmploymentInformation.EmpJob {
-    //   *
-    // };
+    entity EmpJob            as
+    projection on ECEmploymentInformation.EmpJob {
+      key userId,  
+      department
+    };
     type userjobinfo{
     
         userId : String;
@@ -34,10 +35,8 @@ service EmployeeService  {
         
     };
     entity User        as
-    projection on PLTUserManagement.User { *
-    //   department,
-    //   division,
-    //   email,empId,gender,jobCode,salary,userId,manager
+    projection on PLTUserManagement.User { 
+    *
     };
     type userpersonalinfo {
     
@@ -68,14 +67,13 @@ service EmployeeService  {
         benefitsRate: String;
     };
    
-        function fetchEmpDetails(userId : String) returns {
-            userre:  userpersonalinfo;
-            sal: compensationinfo;
-            usersPhoto: usersPhoto;
-            EmpInfo : userjobinfo   
+        function fetchEmpDetails(userId : String) returns array of{
+                User:  userpersonalinfo;
+                EmpCompensation  : compensationinfo;
+                Photo: usersPhoto;
+                EmpJob : userjobinfo 
     };  
     }
 
     
-
-   
+  

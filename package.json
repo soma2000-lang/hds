@@ -35,12 +35,13 @@
             "[development]": {
                 "strategy": "mock",
                 "users": {
-                    "103093": {
+                    "108743": {
                         "roles": [
                             "authenticated-user"
                         ],
                         "tenant": "t1"
                     }
+                    
                 }
             },
             "ECCompensationInformation": {

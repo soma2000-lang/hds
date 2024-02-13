@@ -4,14 +4,15 @@
 		xmlns="sap.m">
 
 
-	<layout:HorizontalLayout class="sapUiSmallMarginTop">
+	<layout:HorizontalLayout class="sapUiSmallMarginTop" busy="{ReportInfoModel>/busy}"
+					  busyIndicatorDelay="0" >
 		<layout:VerticalLayout>
 			<Label text="Manager"/>
 			<layout:HorizontalLayout>
 					<layout:content>
 						<layout:VerticalLayout>
-							<Text text="{ReportInfoModel>/Users/defaultFullName}"/>
-							<Text text="{ReportInfoModel>/Users/department}"/>
+							<Text text="{ReportInfoModel>/Users/0/User/manager}"/>
+							<Text text="{ReportInfoModel>/Users/0/User/salary}"/>
 
 						</layout:VerticalLayout>
 					</layout:content>

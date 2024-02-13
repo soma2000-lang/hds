@@ -2,20 +2,21 @@
 
 	<forms:SimpleForm labelSpanL="4" labelSpanM="4" editable="false"
 					  labelSpanS="4" emptySpanL="0" emptySpanM="0" emptySpanS="0"
-					  maxContainerCols="2" layout="ResponsiveGridLayout"  width="100%">
+					  maxContainerCols="2" layout="ResponsiveGridLayout" busy="{ReportInfoModel>/busy}"
+					  busyIndicatorDelay="0" width="100%">
 
 		<Label text="Job classification"/>
-		<Text text="{ReportInfoModel>/Users/jobTitle}"/>
+		<Text text="{ReportInfoModel>/Users/0/EmpJob/jobTitle}"/>
 
 		<Text text=" "/>
 
 		<Label text="Pay Grade"/>
-		<Text text="{ReportInfoModel>/Users/jobTitle}"/>
+		<Text text="{ReportInfoModel>/Users/0/EmpJob/jobTitle}"/>
 
 		<Text text=" "/>
 
 		<Label text="Job title"/>
-		<Text text="{ReportInfoModel>/Users/jobTitle}"/>
+		<Text text="{ReportInfoModel>/Users/0/EmpJob/jobTitle}"/>
 
 	</forms:SimpleForm>
 
