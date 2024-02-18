@@ -17,6 +17,7 @@ service EmployeeService @(requires: ['authenticated-user']) {
     entity EmpJob            as
     projection on ECEmploymentInformation.EmpJob {
       key userId,  
+      
       department
     };
     type userjobinfo{
