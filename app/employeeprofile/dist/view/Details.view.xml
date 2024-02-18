@@ -8,33 +8,38 @@
 	controllerName="employeeprofile.controller.Details"
 	height="100%">
 	<ObjectPageLayout id="ObjectPageLayout"
+		busy="{ReportInfoModel>/busy}"
+		busyIndicatorDelay="0"
 		subSectionLayout="TitleOnLeft"
 		showTitleInHeaderContent="true"
-        sections="{ReportInfoModel>/Users}"
-		upperCaseAnchorBar="false">
+       	upperCaseAnchorBar="false">
 		<headerTitle>
 			<ObjectPageDynamicHeaderTitle>
+			 <breadcrumbs>
+                    <m:Breadcrumbs id="breadcrumbsId" currentLocationText="Employee Information" >
+                    </m:Breadcrumbs>
+            </breadcrumbs>
 				<expandedHeading>
-					<m:Title text="{ReportInfoModel>jobTitle}" wrapping="true" />
+					<m:Title text="{ReportInfoModel>/Users/0/User/defaultFullName}" wrapping="true" />
 				</expandedHeading>
 
 				<snappedHeading>
 						<m:FlexBox fitContainer="true" alignItems="Center" >
 							<m:Avatar src="sap-icon://picture" class="sapUiTinyMarginEnd"/>
-							<m:Title text="{ReportInfoModel>jobTitle}" wrapping="true" />
+							<m:Title text="{ReportInfoModel>/Users/0/User/gender}" wrapping="true" />
 						</m:FlexBox>
 				</snappedHeading>
 
 				<expandedContent>
-					<m:Text text="{ReportInfoModel>jobTitle}"/>
+					<m:Text text="{ReportInfoModel>/Users/0/User/department}"/>
 				</expandedContent>
 
 				<snappedContent>
-					<m:Text text="{ReportInfoModel>jobTitle}"/>
+					<m:Text text="{ReportInfoModel>/Users/0/User/department}"/>
 				</snappedContent>
 
 				<snappedTitleOnMobile>
-					<m:Title text="{ReportInfoModel>jobTitle}"/>
+					<m:Title text="{ReportInfoModel>/Users/0/User/department}"/>
 				</snappedTitleOnMobile>
 
 				<actions>
@@ -48,11 +53,11 @@
 
 		<headerContent>
 			<m:FlexBox wrap="Wrap" fitContainer="true">
-				<m:Avatar class="sapUiSmallMarginEnd" src="sap-icon://picture" displaySize="L"/>
+				<m:Avatar class="sapUiSmallMarginEnd" src="{ReportInfoModel>/Users/0/Photo/photo}" displaySize="L"/>
 
 				<layout:VerticalLayout>
-					<m:Link text="{ReportInfoModel>homePhone}"/>
-					<m:Link text="{ReportInfoModel>email}"/>
+					<m:Link text="{ReportInfoModel>/Users/0/User/homePhone}"/>
+					<m:Link text="{ReportInfoModel>/Users/0/User/email}"/>
 					<layout:HorizontalLayout>
 						<m:Image src="./test-resources/sap/uxap/images/linkedin.png"/>
 						<m:Image src="./test-resources/sap/uxap/images/Twitter.png" class="sapUiSmallMarginBegin"/>
@@ -60,7 +65,7 @@
 				</layout:VerticalLayout>
 
 				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-					<m:Label text="Hello! I am an employee of Deloitte"/>
+					<m:Label text="{ReportInfoModel>/Users/0/User/addressLine1}"/>
 					<m:VBox>
 						<m:Label text="Achieved goals"/>
 						<m:ProgressIndicator percentValue="80" displayValue="80%"/>
@@ -68,7 +73,7 @@
 				</layout:VerticalLayout>
 
 				<layout:VerticalLayout class="sapUiSmallMarginBeginEnd">
-					<m:Label text="{ReportInfoModel>location}"/>
+					<m:Label text="{ReportInfoModel>/Users/0/User/jobCode}"/>
 				</layout:VerticalLayout>
 			</m:FlexBox>
 		</headerContent>

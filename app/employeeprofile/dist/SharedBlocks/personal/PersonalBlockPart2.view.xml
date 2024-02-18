@@ -1,11 +1,12 @@
 <mvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:core="sap.ui.core"
           xmlns:forms="sap.ui.layout.form" xmlns="sap.m">
 
-	<forms:SimpleForm editable="false" layout="ColumnLayout"  content="{ReportInfoModel>/compensationinfo}">
+	<forms:SimpleForm editable="false" layout="ColumnLayout" busy="{ReportInfoModel>/busy}"
+		busyIndicatorDelay="0">
 		<core:Title text="Payment method for Expenses"/>
 
 		<Label text="Extra Travel Expenses"/>
-		<Text text="{ReportInfoModel>benefitsRate}"/>
+		<Text text="{ReportInfoModel>/Users/0/EmpCompensation/benefitsRate}"/>
 
 	</forms:SimpleForm>
 

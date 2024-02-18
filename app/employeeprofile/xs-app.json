@@ -3,6 +3,12 @@
   "authenticationMethod": "route",
   "routes": [
     {
+      "source": "^/v2/employee/(.*)$",
+      "csrfProtection": false,
+      "authenticationType": "xsuaa",
+      "destination": "Report-srv"
+  },
+    {
       "source": "^/resources/(.*)$",
       "target": "/resources/$1",
       "authenticationType": "none",

@@ -13,7 +13,7 @@
       "name": "Token_Exchange",
       "description": "UAA Token Exchange",
       "scope-references": [
-          "uaa.user"
+        "uaa.user"
       ]
     }
   ],

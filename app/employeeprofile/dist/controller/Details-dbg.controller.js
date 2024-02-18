@@ -1,34 +1,52 @@
 sap.ui.define([
-    "sap/ui/core/mvc/Controller"],
+    "sap/ui/core/mvc/Controller",
+    "../model/constants"
+    ],
    
 
     /**
      * @param {typeof sap.ui.core.mvc.Controller} Controller
      */
-    function (Controller) {
+    function (Controller,constants) {
         "use strict";
         
         return Controller.extend("employeeprofile.controller.Details", {
             
             onInit: function () {
-                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);  
-               this.oModel = this.getOwnerComponent().getModel("ReportInfoModel");
-               oRouter.getRoute("Details");
+                this.oSFModel = this.getOwnerComponent().getModel();
+                this.oModel = this.getOwnerComponent().getModel("ReportInfoModel");
+              // this.initJsonModel();
+                var oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+                oRouter.getRoute("Details").attachPatternMatched(this._onObjectMatched, this);
             },
     
+            _onObjectMatched: async function (oEvent) {
+                this.fetchusersReport(oEvent).then((oData) => {
+                    this.oModel.setProperty("/busy", false);
+                }).catch((oErr) => {
+                    this.oModel.setProperty("/busy", false);
+                });
+            },
+
+            // initJsonModel: function () {
+            //     this.oModel.setData(constants);
+            // },
 
             
            
             fetchusersReport : async function (oEvent) {
+                try {
+
                 return new Promise(function (resolve, reject) {
-                    this.oModel.setProperty("/busy", false);
                     var args = oEvent.getParameter("arguments");
                     console.log('arguments',args);
                     var userId=args.userId;
-                    this.oSFModel.setDeferredGroups(["batchuserpersonalinfo"]);
-                    this.oSFModel.callFunction("/userpersonalinfo", {
+                    console.log("Please trigger:", userId);
+                    this.oModel.setProperty("/busy", true);
+                    this.oSFModel.setDeferredGroups(["batchfetchEmpDetails"]);
+                    this.oSFModel.callFunction("/fetchEmpDetails", {
                         method: "GET",
-                        batchGroupId: "batchuserpersonalinfo",
+                        batchGroupId: "batchfetchEmpDetails",
                         urlParameters: {
             
                             userId: userId
@@ -36,72 +54,63 @@ sap.ui.define([
                         }
                     });
 
-                    this.oSFModel.callFunction("/userjobinfo", {
-                        method: "GET",
-                        batchGroupId: "batchuserjobinfo",
-                        urlParameters: {
-                            userId: userId
+                    // this.oSFModel.callFunction("/userjobinfo", {
+                    //     method: "GET",
+                    //     batchGroupId: "batchfetchEmpDetails",
+                    //     urlParameters: {
+                    //         userId: userId
                           
-                        }
-                    });
+                    //     }
+                    // });
 
-                    this.oSFModel.callFunction("/usersPhoto", {
-                        method: "GET",
-                        batchGroupId: "batchusersPhoto",
-                        urlParameters: {
-                            userId: userId,
+                    // this.oSFModel.callFunction("/usersPhoto", {
+                    //     method: "GET",
+                    //     batchGroupId: "batchfetchEmpDetails",
+                    //     urlParameters: {
+                    //         userId: userId,
                            
-                        }
-                    });
-                    this.oSFModel.callFunction("/compensationinfo", {
-                        method: "GET",
-                        batchGroupId: "batchcompensationinfo",
-                        urlParameters: {
-                            userId: userId,
+                    //     }
+                    // });
+                    // this.oSFModel.callFunction("/compensationinfo", {
+                    //     method: "GET",
+                    //     batchGroupId: "batchfetchEmpDetails",
+                    //     urlParameters: {
+                    //         userId: userId,
                             
-                        }
-                    });
+                    //     }
+                    // });
 
                     
 
                     this.oSFModel.submitChanges({
-                        batchGroupId: "batchuserpersonalinfo",
+                        batchGroupId: "batchfetchEmpDetails",
                         success: function (oData) {
-                            var aUsers = []
+                            var aUsers = [];
                             if (oData.__batchResponses[0].statusCode == '200') {
                                 aUsers = oData.__batchResponses[0].data.results;
                             }
 
                            
                     
-                            if (oData.__batchResponses[1].statusCode == '200') {
-                                aUsers = oData.__batchResponses[0].data.results;
+                            // if (oData.__batchResponses[1].statusCode == '200') {
+                            //     aUsers = oData.__batchResponses[1].data.results;
                             
-                                }
+                            //     }
                             
 
-                            if (oData.__batchResponses[2].statusCode == '200') {
-                                if (aUsers.length) {
-                                    aUsers.forEach(each => {
-                                        oData.__batchResponses[2].data.results.forEach((image) => {
-                                            if (each.userId == image.userId) {
-                                                image.photo = image.photo ? ("data:image/jpeg;base64," + image.photo.replaceAll("\r\n", "")) : "";
-                                                each["photo"] = image;
-                                            }
-                                        });
-                                    })
-                                }
-                               // this.oModel.setProperty("/Users", aUsers);
-                        
-                            }
-
-                            if (oData.__batchResponses[3].statusCode == '200') {
-                                aUsers = oData.__batchResponses[3].data.results;
+                            //     if (oData.__batchResponses[2].statusCode == '200') {
+                                                        
+                            //                             aUsers=oData.__batchResponses[2].data.results;
+                            //                             this.oModel.setProperty("/Users", aUsers);
+                                                       
+                            //                         }
+                            // if (oData.__batchResponses[3].statusCode == '200') {
+                            //     aUsers = oData.__batchResponses[3].data.results;
                 
                         
-                            }
+                           //}
                         
-                        
+                            console.log("aUsers",aUsers);
                             this.oModel.setProperty("/Users", aUsers);
                             
                                             resolve(true);
@@ -111,7 +120,15 @@ sap.ui.define([
                                         }.bind(this)
                                     });
                                 }.bind(this));
-                            },
-                    
-        });
-    });
+            
+                            } catch (oErr) {
+                                reject(oErr);
+                                this.oModel.setProperty("/busy", false);
+                            }
+                        }
+            
+            
+            
+            
+                    });
+                });

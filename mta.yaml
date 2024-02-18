@@ -3,71 +3,97 @@ ID: Report
 description: A simple CAP project.
 version: 1.0.0
 modules:
-- name: Report-srv
-  type: nodejs
-  path: gen/srv
-  provides:
-  - name: srv-api
-    properties:
-      srv-url: ${default-url}
-  parameters:
-    buildpack: nodejs_buildpack
-  build-parameters:
-    builder: npm
-- name: Report-app-content
-  type: com.sap.application.content
-  path: .
-  requires:
-  - name: Report-repo-host
-    parameters:
-      content-target: true
-  build-parameters:
-    build-result: resources
+  - name: Report-srv
+    type: nodejs
+    path: gen/srv
     requires:
-    - artifacts:
-      - employeeprofile.zip
-      name: employeeprofile
-      target-path: resources/
-- name: employeeprofile
-  type: html5
-  path: app/employeeprofile
-  build-parameters:
-    build-result: dist
-    builder: custom
-    commands:
-    - npm install
-    - npm run build:cf
-    supported-platforms: []
+    - name: Report-auth
+    - name: Report-destination-service
+    - name: Report-db
+    provides:
+      - name: srv-api
+        properties:
+          srv-url: ${default-url}
+    parameters:
+      buildpack: nodejs_buildpack
+    build-parameters:
+      builder: npm
+      ignore:
+      - default-*.json
+      - .env
+      - '*node_modules*'
+      - package-lock.json
+  - name: Report-app-content
+    type: com.sap.application.content
+    path: .
+    requires:
+      - name: Report-repo-host
+        parameters:
+          content-target: true
+    build-parameters:
+      build-result: resources
+      requires:
+        - artifacts:
+            - employeeprofile.zip
+          name: employeeprofile
+          target-path: gen/app
+
+  - name: employeeprofile
+    type: html5
+    path: app/employeeprofile
+    build-parameters:
+      build-result: dist
+      builder: custom
+      commands:
+        - npm install
+        - npm run build:cf
+      supported-platforms:
+        []
 resources:
-- name: Report-repo-host
-  type: org.cloudfoundry.managed-service
-  parameters:
-    service: html5-apps-repo
-    service-name: Report-html5-srv
-    service-plan: app-host
-- name: Report-destination-service
-  type: org.cloudfoundry.managed-service
-  parameters:
-    config:
-      HTML5Runtime_enabled: false
-      init_data:
-        instance:
-          destinations:
-          - Authentication: NoAuthentication
-            Name: ui5
-            ProxyType: Internet
-            Type: HTTP
-            URL: https://ui5.sap.com
-          existing_destinations_policy: update
-      version: 1.0.0
-    service: destination
-    service-name: Report-destination-service
-    service-plan: lite
+  - name: Report-repo-host
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: html5-apps-repo
+      service-name: Report-html5-srv
+      service-plan: app-host
+  - name: Report-destination-service
+    type: org.cloudfoundry.managed-service
+    parameters:
+      config:
+        HTML5Runtime_enabled: false
+        init_data:
+          instance:
+            destinations:
+              - Authentication: NoAuthentication
+                Name: ui5
+                ProxyType: Internet
+                Type: HTTP
+                URL: https://ui5.sap.com
+            existing_destinations_policy: update
+        version: 1.0.0
+      service: destination
+      service-name: Report-destination-service
+      service-plan: lite
+  - name: Report-auth
+    type: org.cloudfoundry.managed-service
+    parameters:
+      service: xsuaa
+      service-plan: application
+      path: ./xs-security.json
+      config:
+        xsappname: Report-${org}-${space}
+        tenant-mode: dedicated
+  - name: Report-db
+    type: com.sap.xs.hdi-container
+    parameters:
+      service: hana
+      service-plan: hdi-shared
 parameters:
   deploy_mode: html5-repo
   enable-parallel-deployments: true
 build-parameters:
   before-all:
-  - builder: custom
-    commands:
-    - npx cds build --production
+    - builder: custom
+      commands:
+        - npm install --production
+        - npx -p @sap/cds-dk cds build --production

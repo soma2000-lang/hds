@@ -1,11 +1,10 @@
 sap.ui.define([],
     function () {
         'use strict';
-
+ 
         var constants = {
-            busy : false,
-            userIdValue : "",
+            busy: false
         };
-
+ 
         return constants;
     });
